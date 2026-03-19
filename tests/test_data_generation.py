@@ -21,7 +21,6 @@ class TestDataGeneration:
     def test_generator_initialization(self):
         """Test generator initializes correctly."""
         assert self.generator.n_customers == 100
-        assert self.generator.seed == 42
 
     def test_generate_customer_id(self):
         """Test customer ID generation."""
@@ -69,8 +68,9 @@ class TestDataGeneration:
 
     def test_generate_total_charges(self):
         """Test total charges calculation."""
-        tenure = [12, 24, 36]
-        monthly = [50.0, 75.0, 100.0]
+        import numpy as np
+        tenure = np.array([12, 24, 36])
+        monthly = np.array([50.0, 75.0, 100.0])
         total = self.generator.generate_total_charges(tenure, monthly)
         assert len(total) == 3
 

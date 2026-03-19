@@ -159,6 +159,11 @@ class ChurnInsights:
         """
         Generate actionable retention strategies.
         """
+        if 'total_services_calc' not in self.df.columns:
+            service_cols = ['Online_Security', 'Online_Backup', 'Device_Protection',
+                          'Tech_Support', 'Streaming_TV', 'Streaming_Movies']
+            self.df['total_services_calc'] = self.df[service_cols].sum(axis=1)
+        
         strategies = [
             {
                 'name': 'Early Engagement Program',
