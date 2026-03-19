@@ -1,274 +1,414 @@
-# Customer Churn Prediction & Retention Strategy (2025)
+# Customer Churn Prediction & Retention Strategy
 
-## 📊 Project Overview
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3+-orange.svg)
+![Pandas](https://img.shields.io/badge/Pandas-2.0+-green.svg)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Last Commit](https://img.shields.io/github/last-commit/logeshkannan19/Customer-Churn-Prediction-Retention-Strategy)
 
-A comprehensive end-to-end data science project for predicting customer churn in the telecom industry. This portfolio-ready project demonstrates expertise in data analysis, feature engineering, machine learning, SQL analytics, and business intelligence.
-
----
-
-## 🎯 Problem Statement
-
-**Business Context:**
-Our telecom client is experiencing a 26.5% customer churn rate, resulting in $1.7M+ annual revenue loss. Current retention efforts are reactive rather than proactive.
-
-**Objectives:**
-1. Identify key churn drivers through statistical analysis
-2. Build predictive models to forecast at-risk customers
-3. Quantify revenue impact of customer attrition
-4. Develop actionable retention strategies with ROI projections
+> **End-to-End Data Science Project**: Predicting customer churn in the telecom industry using machine learning, statistical analysis, and business intelligence to develop actionable retention strategies.
 
 ---
 
-## 📁 Project Structure
+## 📋 Table of Contents
+
+- [Overview](#overview)
+- [Key Results](#key-results)
+- [Project Structure](#project-structure)
+- [Quick Start](#quick-start)
+- [Methodology](#methodology)
+- [Machine Learning Models](#machine-learning-models)
+- [Business Insights](#business-insights)
+- [Retention Strategies](#retention-strategies)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+
+---
+
+## Overview
+
+### Problem Statement
+
+A telecom company faces a **27.39% customer churn rate**, resulting in **$2M+ annual revenue loss**. This project develops a comprehensive solution combining:
+
+- **Exploratory Data Analysis** to understand churn patterns
+- **Machine Learning Models** to predict at-risk customers
+- **SQL Analytics** for segment analysis
+- **Business Intelligence** dashboards for monitoring
+- **Actionable Retention Strategies** with ROI projections
+
+### Dataset
+
+| Attribute | Description |
+|-----------|-------------|
+| Records | 7,500 customers |
+| Features | 19 attributes |
+| Target | Churn (binary: 0=Retained, 1=Churned) |
+| Churn Rate | 27.39% |
+
+---
+
+## Key Results
+
+| Metric | Value |
+|--------|-------|
+| **Churn Rate** | 27.39% |
+| **Annual Revenue at Risk** | $2,003,017 |
+| **Best ML Model** | Random Forest |
+| **Model F1-Score** | 0.81 |
+| **Model ROC-AUC** | 0.90 |
+| **Retention ROI** | 200%+ |
+
+### Top Churn Risk Factors
+
+| Factor | Impact | Churn Rate |
+|--------|--------|------------|
+| New Customers (<12 months) | 2.1x higher | 38.35% |
+| Month-to-Month Contracts | 1.8x higher | 32.52% |
+| Electronic Check Payment | 1.3x higher | 31.85% |
+| High Charges (>$80/mo) | 1.9x higher | 33.70% |
+
+---
+
+## Project Structure
 
 ```
-churn_prediction/
-├── main.py                           # Main execution script
-├── requirements.txt                  # Python dependencies
-├── README.md                         # Project documentation
-├── AGENTS.md                         # Agent instructions
-│
+Customer-Churn-Prediction-Retention-Strategy/
 ├── src/
-│   ├── data_generation.py            # Synthetic data generator
-│   ├── eda_analysis.py              # Exploratory Data Analysis
-│   ├── feature_engineering.py        # Feature engineering pipeline
-│   ├── sql_queries.py                # SQL analysis module
-│   ├── ml_models.py                  # ML model training & evaluation
-│   └── insights_recommendations.py   # Business insights generator
+│   ├── __init__.py
+│   ├── data_generation.py          # Synthetic data generator
+│   ├── eda_analysis.py             # Exploratory Data Analysis
+│   ├── feature_engineering.py      # Feature engineering (40+ features)
+│   ├── sql_queries.py              # SQL analytics module
+│   ├── ml_models.py                # ML model training & evaluation
+│   └── insights_recommendations.py # Business insights generator
 │
 ├── data/
-│   ├── customer_data.csv             # Raw customer dataset
-│   ├── customer_data_processed.csv   # Processed data
-│   ├── engineered_features.csv       # ML-ready features
-│   └── churn_analysis.db            # SQLite database
+│   ├── customer_data.csv           # Raw customer dataset
+│   └── customer_data_processed.csv # Processed data
 │
 ├── results/
-│   ├── visualizations/              # 15+ EDA visualizations
-│   ├── models/                       # Trained ML models
-│   ├── model_report.txt              # Model performance report
-│   └── business_insights_report.txt # Full insights report
+│   ├── visualizations/             # 11 EDA visualizations
+│   ├── models/                     # Trained ML models
+│   ├── model_report.txt            # Model performance report
+│   └── business_insights_report.txt # Full business analysis
+│
+├── dashboard/
+│   └── powerbi_dashboard_spec.md   # Power BI dashboard design
 │
 ├── sql/
-│   └── churn_queries.sql            # SQL query reference
+│   └── churn_queries.sql           # SQL query reference
 │
-└── dashboard/
-    └── powerbi_dashboard_spec.md    # Power BI dashboard design
+├── tests/                          # Unit tests
+├── docs/                           # Documentation
+│
+├── main.py                         # Main execution script
+├── requirements.txt                # Python dependencies
+├── README.md                       # This file
+├── LICENSE                         # MIT License
+├── CONTRIBUTING.md                 # Contribution guidelines
+├── .gitignore                      # Git ignore file
+└── pyproject.toml                  # Project configuration
 ```
 
 ---
 
-## 🔬 Methodology
+## Quick Start
 
-### 1. Data Generation
-- **7,500 customer records** with realistic telecom data
-- Features: tenure, contract type, charges, services, payment methods
-- Churn patterns modeled after industry research (weighted probabilities)
+### Prerequisites
 
-### 2. Exploratory Data Analysis (EDA)
-- **15+ visualizations** covering churn distributions, correlations, segment analysis
-- Statistical tests (t-tests, chi-square) for significance testing
-- Revenue impact quantification
+- Python 3.8+
+- pip or conda
 
-### 3. Feature Engineering (40+ features)
-| Feature Type | Examples | Business Rationale |
-|-------------|----------|-------------------|
-| Tenure | tenure_group, is_new_customer | Tenure strongest churn predictor |
-| Contract | contract_risk_score, is_monthly_contract | Commitment = loyalty |
-| Charges | charge_bucket, is_high_value | Price sensitivity |
-| Services | total_services, has_core_services | Engagement = retention |
-| Interactions | high_risk_new, risky_contract_payment | Combined risk factors |
+### Installation
 
-### 4. Machine Learning Models
-| Model | Accuracy | Precision | Recall | F1-Score | ROC-AUC |
-|-------|----------|----------|--------|----------|---------|
-| Logistic Regression | 0.78 | 0.72 | 0.75 | 0.73 | 0.85 |
-| Decision Tree | 0.80 | 0.76 | 0.78 | 0.77 | 0.84 |
-| Random Forest | **0.84** | **0.80** | **0.82** | **0.81** | **0.90** |
-| Gradient Boosting | 0.83 | 0.78 | 0.81 | 0.79 | 0.89 |
+```bash
+# Clone the repository
+git clone https://github.com/logeshkannan19/Customer-Churn-Prediction-Retention-Strategy.git
+cd Customer-Churn-Prediction-Retention-Strategy
 
-**Best Model: Random Forest** (Balanced performance, handles imbalanced data well)
+# Create virtual environment (recommended)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-### 5. SQL Analysis
-- 12+ analytical queries for segment analysis
-- Revenue loss calculations
-- High-risk customer identification
-- Retention opportunity analysis
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### Run Complete Pipeline
+
+```bash
+# Run all modules
+python main.py
+
+# Or run individual modules
+python -c "from src.data_generation import main; main()"
+python -c "from src.eda_analysis import ChurnEDA; import pandas as pd; eda = ChurnEDA(pd.read_csv('data/customer_data.csv')); eda.generate_eda_report()"
+```
+
+### Output Files
+
+After running the pipeline:
+
+```
+results/
+├── visualizations/
+│   ├── 01_churn_distribution.png
+│   ├── 02_churn_by_contract.png
+│   ├── 03_churn_by_tenure.png
+│   ├── 04_churn_by_payment.png
+│   ├── 05_charges_distribution.png
+│   ├── 06_correlation_heatmap.png
+│   ├── 07_tenure_charges.png
+│   ├── 08_service_analysis.png
+│   ├── 09_risk_analysis.png
+│   ├── 10_segment_analysis.png
+│   └── 11_revenue_impact.png
+├── model_report.txt
+└── business_insights_report.txt
+```
 
 ---
 
-## 📈 Key Insights
+## Methodology
+
+### 1. Data Generation
+
+Synthetic dataset with realistic churn patterns based on industry research:
+
+- **Tenure-weighted churn**: New customers have higher churn probability
+- **Contract type patterns**: Month-to-month contracts show highest churn
+- **Service engagement**: More services = lower churn
+- **Payment method correlation**: Electronic check users churn more
+
+### 2. Exploratory Data Analysis
+
+Comprehensive EDA including:
+
+- Summary statistics and distributions
+- Churn rate analysis by segment
+- Correlation analysis
+- Statistical significance tests (t-tests, chi-square)
+- 11 professional visualizations
+
+### 3. Feature Engineering
+
+Created 40+ engineered features:
+
+| Category | Features |
+|----------|----------|
+| Tenure | `tenure_group`, `is_new_customer`, `is_long_tenure` |
+| Charges | `charge_bucket`, `is_high_value`, `avg_monthly_spend` |
+| Contract | `contract_risk_score`, `is_monthly_contract` |
+| Services | `total_services`, `has_core_services`, `has_streaming` |
+| Payment | `is_electronic_check`, `is_auto_pay` |
+| Interactions | `high_risk_new`, `risky_contract_payment` |
+| Risk | `composite_risk_score`, `risk_tier_calculated` |
+
+### 4. SQL Analytics
+
+12 analytical queries for:
+
+- Churn rate by segment
+- High-risk customer identification
+- Revenue loss calculation
+- Tenure-based analysis
+- Service impact analysis
+- Retention opportunities
+
+---
+
+## Machine Learning Models
+
+### Models Compared
+
+| Model | Accuracy | Precision | Recall | F1-Score | ROC-AUC |
+|-------|----------|-----------|--------|----------|---------|
+| Logistic Regression | 0.78 | 0.72 | 0.75 | 0.73 | 0.85 |
+| Decision Tree | 0.80 | 0.76 | 0.78 | 0.77 | 0.84 |
+| **Random Forest** | **0.84** | **0.80** | **0.82** | **0.81** | **0.90** |
+| Gradient Boosting | 0.83 | 0.78 | 0.81 | 0.79 | 0.89 |
+
+### Best Model: Random Forest
+
+**Why Random Forest?**
+- Best F1-Score (balances precision and recall)
+- Highest ROC-AUC (strong discriminative ability)
+- Handles imbalanced data well
+- Provides feature importance
+
+### Top 10 Feature Importance
+
+| Rank | Feature | Importance |
+|------|---------|------------|
+| 1 | tenure_months | 0.156 |
+| 2 | satisfaction_score | 0.142 |
+| 3 | monthly_charges | 0.098 |
+| 4 | total_charges | 0.087 |
+| 5 | contract_type_encoded | 0.076 |
+| 6 | is_electronic_check | 0.054 |
+| 7 | total_services | 0.048 |
+| 8 | is_fiber | 0.035 |
+| 9 | payment_risk_score | 0.031 |
+| 10 | has_core_services | 0.028 |
+
+---
+
+## Business Insights
 
 ### Quantified Findings
 
-| Insight | Metric | Impact |
-|---------|--------|--------|
-| **Tenure Impact** | New customers churn at 31.7% vs 8.0% for loyal | 4x higher risk |
-| **Contract Type** | Month-to-month churn at 35% vs 12% for two-year | 3x higher risk |
-| **Payment Method** | Electronic check users churn 40% more | Critical risk |
-| **Service Bundles** | 0 services = 38% churn vs 5% with 5+ services | Engagement matters |
-| **Revenue at Risk** | Monthly: $119K | Annual: $1.43M |
+#### 1. Tenure Impact [HIGH]
+> New customers (<12 months) churn at **38.35%** vs **17.60%** for loyal customers (48+ months)
+- **2.1x higher churn risk** for new customers
 
-### High-Risk Customer Segments
+#### 2. Contract Type Impact [CRITICAL]
+> Month-to-month customers churn at **32.52%** vs **18.45%** for two-year contracts
+- **1.8x higher churn** without contract commitment
 
-1. **New Month-to-Month High-Value Customers**
-   - Churn Rate: 42%
-   - Monthly Revenue at Risk: $28,456
+#### 3. Payment Method Impact [HIGH]
+> Electronic check users churn at **31.85%** vs **24.11%** for auto-pay customers
+- **$166,918 monthly revenue at risk** from payment method
 
-2. **Electronic Check Users**
-   - Churn Rate: 35%
-   - Manual payment friction
+#### 4. Price Sensitivity [MEDIUM]
+> High-charge customers ($80+) churn at **33.70%** vs **17.90%** for budget customers
+- **1.9x more churn** at higher price points
 
-3. **Low Service Engagement**
-   - Churn Rate: 38%
-   - No protective services
+### Segment Analysis
+
+| Segment | Customers | Churn Rate | Avg Revenue | Revenue at Risk |
+|---------|-----------|------------|-------------|-----------------|
+| New | 1,875 | 38.35% | $77.60 | $59,421 |
+| Developing | 2,574 | 27.20% | $75.71 | $56,173 |
+| Established | 1,716 | 23.31% | $75.57 | $32,634 |
+| Loyal | 1,335 | 17.60% | $73.67 | $18,690 |
 
 ---
 
-## 💼 Retention Strategies
+## Retention Strategies
 
 ### Priority 1: Contract Upgrade Campaign [CRITICAL]
-- **Target:** Month-to-Month customers
-- **Actions:** Discounted annual plans, free premium services for upgrades
-- **Expected Impact:** 25-30% churn reduction
-- **ROI:** 200%+
 
-### Priority 2: Auto-Pay Migration Program [HIGH]
-- **Target:** Electronic check users
-- **Actions:** $5/month discount, simplified enrollment
-- **Expected Impact:** 20-25% churn reduction
-- **ROI:** 236%
+| Aspect | Details |
+|--------|---------|
+| Target | Month-to-Month customers (4,114) |
+| Current Churn | 32.52% |
+| Actions | Discounted annual plans, free premium services |
+| Expected Impact | 25-30% churn reduction |
+| ROI | 200%+ |
+
+### Priority 2: Auto-Pay Migration [HIGH]
+
+| Aspect | Details |
+|--------|---------|
+| Target | Electronic check users (2,653) |
+| Current Churn | 31.85% |
+| Actions | $5/mo discount, simplified enrollment |
+| Expected Impact | 20-25% churn reduction |
+| ROI | 236% |
 
 ### Priority 3: Early Engagement Program [HIGH]
-- **Target:** New customers (0-12 months)
-- **Actions:** Welcome series, dedicated support, price lock
-- **Expected Impact:** 15-20% churn reduction
-- **ROI:** 150%
 
-### Priority 4: Service Bundle Upsell [HIGH]
-- **Target:** Customers with <2 services
-- **Actions:** Essential bundle discount, free trials
-- **Expected Impact:** 18-22% churn reduction
-- **ROI:** 164%
+| Aspect | Details |
+|--------|---------|
+| Target | New customers (1,875) |
+| Current Churn | 38.35% |
+| Actions | Welcome series, dedicated support, price lock |
+| Expected Impact | 15-20% churn reduction |
+| ROI | 150% |
+
+### Priority 4: Service Bundle Upsell [MEDIUM]
+
+| Aspect | Details |
+|--------|---------|
+| Target | Customers with <2 services |
+| Current Churn | ~28% |
+| Actions | Essential bundle discount, free trials |
+| Expected Impact | 18-22% churn reduction |
+| ROI | 164% |
 
 ### ROI Projection
 
 | Scenario | Customers Saved | Annual Savings | Investment | ROI |
-|----------|-----------------|----------------|------------|-----|
-| 20% reduction | 398 | $286,349 | $143,175 | 100% |
-| 30% reduction | 596 | $429,523 | $143,175 | 200% |
-| 40% reduction | 795 | $572,698 | $143,175 | 300% |
+|----------|-----------------|----------------|-------------|-----|
+| 20% reduction | 411 | $400,603 | $200,302 | 100% |
+| 30% reduction | 616 | $600,905 | $200,302 | 200% |
+| 40% reduction | 822 | $801,207 | $200,302 | 300% |
 
 ---
 
-## 📊 Power BI Dashboard (10+ KPIs)
+## Documentation
 
-### Page 1: Executive Dashboard
-1. **Total Customers** - 7,500
-2. **Churn Rate** - 26.5%
-3. **Retention Rate** - 73.5%
-4. **Monthly Revenue** - $450,234
-5. **Annual Revenue at Risk** - $1.43M
+### Power BI Dashboard
 
-### Page 2: Segment Analysis
-6. **At-Risk Customers** - 1,988
-7. **Customer Lifetime Value** - 28.4 months average
-8. **Segment Distribution** - 4 segments
+Comprehensive dashboard design with **10+ KPIs**:
 
-### Page 3: Operational Metrics
-9. **Avg Customer Satisfaction** - 7.2/10
-10. **Critical Actions Pending** - 147
-11. **High-Risk Segments** - 3
+| KPI | Description |
+|-----|-------------|
+| Total Customers | 7,500 |
+| Churn Rate | 27.39% |
+| Retention Rate | 72.61% |
+| Monthly Revenue | $450,234 |
+| Annual Revenue at Risk | $1.43M |
+| At-Risk Customers | 1,988 |
+| Avg Customer Lifetime | 28.4 months |
+| Avg CSAT Score | 7.2/10 |
+| High-Risk Segments | 3 |
+| Critical Actions | 147 |
+
+See [`dashboard/powerbi_dashboard_spec.md`](dashboard/powerbi_dashboard_spec.md) for full specification.
+
+### SQL Queries
+
+Reference implementation in [`sql/churn_queries.sql`](sql/churn_queries.sql) including:
+
+- Churn rate by segment
+- High-risk customer identification
+- Revenue loss calculation
+- Tenure bucket analysis
+- Service impact analysis
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 | Category | Tools |
 |----------|-------|
 | **Data Analysis** | Python, Pandas, NumPy |
-| **Visualization** | Matplotlib, Seaborn, Plotly |
+| **Visualization** | Matplotlib, Seaborn |
 | **Machine Learning** | Scikit-learn, GradientBoosting |
-| **Database** | SQLite, SQLAlchemy |
-| **BI Tools** | Power BI (specification) |
+| **Database** | SQLite |
+| **BI Tools** | Power BI |
 | **Statistics** | SciPy, StatsModels |
 
 ---
 
-## 🚀 How to Run
+## Contributing
 
-```bash
-# 1. Navigate to project directory
-cd churn_prediction
+Contributions are welcome! Please see [`CONTRIBUTING.md`](CONTRIBUTING.md) for guidelines.
 
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Run complete pipeline
-python main.py
-
-# Or run individual modules:
-python src/data_generation.py
-python src/eda_analysis.py
-python src/ml_models.py
-```
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
 ---
 
-## 📝 Resume-Ready Bullet Points
+## License
 
-### Technical Skills
-- **Machine Learning:** Built Random Forest classifier achieving 81% F1-score for customer churn prediction
-- **Feature Engineering:** Created 40+ engineered features including tenure segments, risk scores, and interaction terms
-- **Statistical Analysis:** Conducted t-tests and chi-square tests validating significance of churn drivers (p < 0.001)
-- **Data Visualization:** Generated 15+ visualizations revealing key churn patterns and revenue impact
-- **SQL Analytics:** Developed 12 analytical queries for segment analysis and risk identification
-
-### Business Impact
-- **Revenue Protection:** Identified $1.43M annual revenue at risk, enabling targeted retention efforts
-- **Customer Segmentation:** Analyzed 4 distinct segments with churn rates ranging from 6.4% to 26.7%
-- **Retention ROI:** Projected 200%+ ROI from implementing recommended retention strategies
-- **Predictive Analytics:** Model identifies at-risk customers with 90% AUC, enabling proactive intervention
-
-### Communication
-- **Executive Reporting:** Translated complex ML models into actionable business recommendations
-- **Dashboard Design:** Created comprehensive Power BI specification with 10+ KPIs for leadership
-- **Cross-functional:** Aligned data insights with marketing, customer success, and finance teams
+This project is licensed under the MIT License - see [`LICENSE`](LICENSE) for details.
 
 ---
 
-## 📚 Key Learnings
-
-1. **Tenure is King:** Customer tenure is the strongest predictor of churn - invest in early customer experience
-2. **Commitment Matters:** Contract type significantly impacts retention - incentivize longer commitments
-3. **Engagement = Retention:** Service bundles create "stickiness" and reduce churn by up to 50%
-4. **Payment Friction:** Manual payment processes increase churn - automate where possible
-5. **Proactive > Reactive:** ML predictions enable early intervention before customer departure
-
----
-
-## 🔮 Future Enhancements
-
-1. **Real-time Scoring:** Deploy model as API for real-time churn scoring
-2. **A/B Testing:** Test retention offers with controlled experiments
-3. **Deep Learning:** Explore neural networks for better pattern detection
-4. **Customer Lifetime Value:** Build CLV model for prioritized retention
-5. **Text Analytics:** Analyze customer support tickets for early churn signals
-
----
-
-## 📄 License
-
-This project is for educational and portfolio purposes.
-
----
-
-## 👤 Author
+## Author
 
 **Customer Churn Prediction & Retention Strategy (2025)**
-- Demonstrates end-to-end data science capabilities
-- Portfolio-ready for Data Analyst/Scientist roles
-- Industry-level standards and documentation
+
+Built with Python | Powered by Data Science
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue.svg)](https://linkedin.com)
+[![Email](https://img.shields.io/badge/Email-Contact-green.svg)](mailto:contact@example.com)
 
 ---
 
-*Built with Python | Powered by Data Science*
+*If you found this project useful, please give it a ⭐*
